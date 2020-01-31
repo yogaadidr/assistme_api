@@ -17,7 +17,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     //REKENING
-    // $router->post('saldo', 'RekeningController@update');
+    $router->post('saldo', 'RekeningController@getSaldo');
     $router->get('rekening', 'RekeningController@list');
     $router->post('rekening/tambah', 'RekeningController@tambah');
     $router->post('rekening/saldo', 'RekeningController@getSaldo');
