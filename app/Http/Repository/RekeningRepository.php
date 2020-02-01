@@ -24,6 +24,13 @@ class RekeningRepository
         return $saldo;
     }
 
+    public function getAllRekeningSaldo() {
+        $saldo = DB::table('v_saldo_rekening')
+                     ->select('no_rekening','nama_rekening','saldo')
+                     ->get();
+        return $saldo;
+    }
+
     public function getAllSaldo() {
         $saldo = DB::table('v_saldo_rekening')
                     ->select(DB::raw('sum(saldo) as total_saldo'))

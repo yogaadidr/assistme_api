@@ -31,8 +31,12 @@ class RekeningController extends Controller
 
     public function getSaldo(Request $request) {
         $data = $request->input();
+        $isrekening = false;
         if($data['no_rekening'] == 'ALL'){
             $listSaldo = $this->rekening->getAllSaldo();
+        }else if($data['no_rekening'] == 'rekening') {
+            $listSaldo = $this->rekening->getAllRekeningSaldo();
+            $isrekening = true;
         }else{
             $listSaldo = $this->rekening->getSaldo($data['no_rekening']);
         }
@@ -40,7 +44,9 @@ class RekeningController extends Controller
         if($listSaldo == null){
             $responseCode = 404;
         }
+        if($isrekening){
+            return $this->responseWithJson($listSaldo,$responseCode);
+        }
         return $this->responseWithJson($listSaldo[0],$responseCode);
     }
-
 }
