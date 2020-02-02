@@ -9,6 +9,12 @@ class RekeningRepository
     public function listAll(){
         return Rekening::where("no_rekening","<>","99")->get();
     }
+
+    public function getRekening($norek){
+        $rekening = Rekening::where('no_rekening', $norek)->first();
+        return $rekening;
+    }
+
     public function add($data) {
         $rekening = new Rekening;
         $rekening->no_rekening = $data['no_rekening'];

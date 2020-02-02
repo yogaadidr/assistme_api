@@ -19,7 +19,15 @@ class RekeningController extends Controller
             $responseCode = 404;
         }
         return $this->responseWithJson($listrekening,$responseCode);
-        echo "asd";
+    }
+
+    public function getRekening($norek,Request $request) {
+        $listrekening = $this->rekening->getRekening($norek);
+        $responseCode = 200;
+        if($listrekening == null){
+            $responseCode = 404;
+        }
+        return $this->responseWithJson($listrekening,$responseCode);
     }
 
     public function tambah(Request $request) {

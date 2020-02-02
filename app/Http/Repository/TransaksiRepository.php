@@ -8,6 +8,10 @@ class TransaksiRepository
 {
     public function list($data){
         // $queries = Capsule::getQueryLog();
+        $rekening = '%';
+        if(isset($data['rekening'])){
+            $rekening = $data['rekening'];
+        }
         if($data['jenis'] == 'harian'){
             return DB::table('tbl_transaksi as t')
             ->select("t.*","a.nama_kategori","a.jenis","b.nama_rekening as nama_rekening_asal","c.nama_rekening as nama_rekening_tujuan")
@@ -15,6 +19,12 @@ class TransaksiRepository
             ->join("tbl_rekening as b",'t.rekening_asal','=','b.no_rekening')
             ->join("tbl_rekening as c",'t.rekening_tujuan','=','c.no_rekening')
             ->whereDate('t.tanggal_transaksi', '>=',$data['tanggal_awal']['date'])
+            ->whereDate('t.tanggal_transaksi', '<=',$data['tanggal_akhir']['date'])
+            ->Where(function($query) use ($rekening)
+            {
+                $query->where('t.rekening_asal', 'like', $rekening)
+                      ->orWhere('t.rekening_tujuan', 'like', $rekening);
+            })
             // ->whereDate('t.tanggal_transaksi', '<=',$data['tanggal_akhir']['date'])
             ->get();
         }else if($data['jenis'] == 'bulanan'){
@@ -24,6 +34,11 @@ class TransaksiRepository
             ->join("tbl_rekening as b",'t.rekening_asal','=','b.no_rekening')
             ->join("tbl_rekening as c",'t.rekening_tujuan','=','c.no_rekening')
             ->whereMonth('t tanggal_transaksi',$data['tanggal_awal']['month'])
+            ->Where(function($query) use ($rekening)
+            {
+                $query->where('t.rekening_asal', 'like', $rekening)
+                      ->orWhere('t.rekening_tujuan', 'like', $rekening);
+            })
             ->get();
         }else if($data['jenis'] == 'tahunan'){
             return DB::table('tbl_transaksi as t')
@@ -32,6 +47,11 @@ class TransaksiRepository
             ->join("tbl_rekening as b",'t.rekening_asal','=','b.no_rekening')
             ->join("tbl_rekening as c",'t.rekening_tujuan','=','c.no_rekening')
             ->whereYear('t.tanggal_transaksi',$data['tanggal_awal']['year'])
+            ->Where(function($query) use ($rekening)
+            {
+                $query->where('t.rekening_asal', 'like', $rekening)
+                      ->orWhere('t.rekening_tujuan', 'like', $rekening);
+            })
             ->get();
         }else{
             return null;
