@@ -34,6 +34,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //TRANSAKSI
     $router->post('transaksi/list', 'TransaksiController@list');
     $router->post('transaksi/tambah', 'TransaksiController@tambah');
+    $router->delete('transaksi/delete', 'TransaksiController@delete');
+
+    //ANGGARAN
+    $router->get('anggaran/list', 'AnggaranController@list');
+    $router->get('anggaran/{id_anggaran}', 'AnggaranController@getAnggaran');
+    $router->delete('anggaran/{id_anggaran}/delete', 'AnggaranController@hapus');
+    $router->post('anggaran/tambah', 'AnggaranController@tambah');
 
 /*
     $group->post('/saldo', RekeningController::class . ':getSaldo');
