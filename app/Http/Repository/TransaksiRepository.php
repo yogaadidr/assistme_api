@@ -59,6 +59,15 @@ class TransaksiRepository
         //return TransaksiModel::all();
     }
 
+    public function rekap($periode){
+        return DB::table('v_rekap_transaksi')
+            ->select("*")
+            ->where('tanggal_pemasukan', '=',$periode)
+            ->orWhere('tanggal_pengeluaran', '=',$periode)
+            ->get();    
+    }
+
+
     public function listRange($jenis,$nilai){
         if($jenis == 'harian'){
             return Transaksi::where(DB::raw("date_format(tanggal_transaksi,'%Y%m%d') = date_format(sysdate(),'%Y%m%d')"));
@@ -79,6 +88,15 @@ class TransaksiRepository
         $transaksi->kategori = $data['kategori'];
         $transaksi->keterangan = $data['keterangan'];
         $transaksi->save();
+        $last_trans = $this->getLastTransaction();
+        foreach($last_trans as $trans);
+        return $trans['no_transaksi'];
+    }
+
+    public function getLastTransaction() {
+        $randomUser = Transaksi::orderBy('no_transaksi', 'desc')->take(1)
+        ->get();
+        return $randomUser;
     }
 
 }

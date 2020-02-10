@@ -23,6 +23,10 @@ class KategoriController extends Controller
 
     public function listJenis($jenis, Request $request) {
         $listKategori = $this->kategori->listByJenis($jenis);
+
+        if($jenis == 'tagihan'){
+            $listKategori = $this->kategori->listKategoriTagihan();
+        }
         $responseCode = 200;
         if($listKategori == null){
             $responseCode = 404;

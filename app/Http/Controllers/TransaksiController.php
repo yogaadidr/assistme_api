@@ -27,11 +27,23 @@ class TransaksiController extends Controller
         return $this->responseWithJson($listTransaksi,$responseCode);
     }
 
+    public function rekap(Request $request) {
+        $data = $request->input();
+        $tanggal = $this->getDateFromString($data['periode']);
+        $periode = $tanggal['month'].'/'.$tanggal['year'];
+        $listTransaksi = $this->transaksi->rekap($periode);
+        $responseCode = 200;
+        if(sizeof($listTransaksi) == 0){
+            $responseCode = 404;
+        }
+        return $this->responseWithJson($listTransaksi,$responseCode);
+    }
+
     public function tambah(Request $request) {
         $data = $request->input();
         $listTransaksi = $this->transaksi->add($data);
         $responseCode = 200;
-        if($listTransaksi != null){
+        if($listTransaksi == null){
             $responseCode = 404;
         }
         return $this->responseWithJson($listTransaksi,$responseCode);

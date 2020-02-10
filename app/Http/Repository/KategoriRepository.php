@@ -14,6 +14,14 @@ class KategoriRepository
         return Kategori::where("jenis",'like','%'.$jenis.'%')
             ->get();
     }
+    public function listKategoriTagihan(){
+        return Kategori::where("id_kategori",'=','6')
+            ->orWhere("id_kategori",'=','7')
+            ->orWhere("id_kategori",'=','8')
+            ->orWhere("id_kategori",'=','9')
+            ->orWhere("id_kategori",'=','10')
+            ->get();
+    }
 
     public function add($data) {
         $kategori = new Kategori;
