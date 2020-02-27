@@ -36,6 +36,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('transaksi/tambah', 'TransaksiController@tambah');
     $router->delete('transaksi/delete', 'TransaksiController@delete');
     $router->post('transaksi/rekap', 'TransaksiController@rekap');
+    $router->post('transaksi/rekap/detail', 'TransaksiController@rekapDetail');
 
     //ANGGARAN
     $router->get('anggaran/list', 'AnggaranController@list');

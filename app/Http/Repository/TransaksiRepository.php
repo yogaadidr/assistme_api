@@ -67,6 +67,15 @@ class TransaksiRepository
             ->get();    
     }
 
+    public function rekapDetail($periode,$jenis){
+        $per = $periode['month'].'/'.$periode['year'];
+        return DB::table('v_rekap_detail_inout')
+            ->select("*")
+            ->where('periode', '=',$per)
+            ->where('jenis', '=',$jenis)
+            ->get();    
+    }
+
 
     public function listRange($jenis,$nilai){
         if($jenis == 'harian'){

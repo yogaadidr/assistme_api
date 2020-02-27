@@ -49,4 +49,16 @@ class TransaksiController extends Controller
         return $this->responseWithJson($listTransaksi,$responseCode);
     }
 
+    public function rekapDetail(Request $request) {
+        $data = $request->input();
+        $tanggal = $this->getDateFromString($data['periode']);
+        $jenis = $data['jenis'];
+        $listTransaksi = $this->transaksi->rekapDetail($tanggal,$jenis);
+        $responseCode = 200;
+        if($listTransaksi == null){
+            $responseCode = 404;
+        }
+        return $this->responseWithJson($listTransaksi,$responseCode);
+    }
+
 }
